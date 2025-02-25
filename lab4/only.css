@@ -9,29 +9,63 @@
     margin: 80px;
     width: 250px;
     height: 250px;
-    background-color: #a52323;
 }
 
 .absolute{
     position: absolute;
-    width: 90px;
-    height: 90px;
-    background-color: #fff;
+    width: 380px;
+    height: 500px;
+    top: 20px;
+    left: 200px;
+    border-radius: 5% 5% 5% 5%/ 5% 5% 5% 5%;    
+    background-color: #60BDAA;
+    /*transform: rotate(-45deg);*/
 }
 
 .absolute1{
     top: 50px;
-    left: 10px;
-    background-color: #139d23;
-    z-index: 200;
+    left: 230px;
+    width: 320px;
+    height: 220px;
+    background-color: #F9FFFF;
+    border-radius: 5% 5% 5% 5%/ 5% 5% 5% 5%;     
+    z-index: 100;
 }
 
 .absolute2{
-    top: 20px;
-    width: 384px;
-    height: 240px;
-    left: 30px;
-    background-color: #dada1c;
-    border-radius: 39% 61% 47% 53% / 70% 46% 54% 30% ;
-    z-index: 100;
+    top: 300px;
+    width: 200px;
+    height: 25px;
+    left: 230px;
+    background-color: #082B25;
+    border-radius: 20px;
+    z-index: 200;
+}
+
+.absolute3{
+    top: 300px;
+    left: 480px;
+    width: 25px;
+    height: 25px;
+    background-color: #001D69;
+    border-radius: 50%;
+    z-index: 300;
+}
+
+.absolute4{
+    top: 352px;
+    left: 222px;
+    width: 40px;
+    height: 100px;
+    background-color: #FEB221;
+    z-index: 400;
+}
+
+.absolute5{
+    top: 380px;
+    left: 230px;
+    width: 100px;
+    height: 40px;
+    background-color: #FEB221;
+    z-index: 400;
 }
