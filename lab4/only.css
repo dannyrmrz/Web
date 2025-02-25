@@ -34,7 +34,7 @@
 
 .absolute2{
     top: 300px;
-    width: 200px;
+    width: 230px;
     height: 25px;
     left: 230px;
     background-color: #082B25;
@@ -44,7 +44,7 @@
 
 .absolute3{
     top: 300px;
-    left: 480px;
+    left: 500px;
     width: 25px;
     height: 25px;
     background-color: #001D69;
@@ -54,7 +54,7 @@
 
 .absolute4{
     top: 352px;
-    left: 222px;
+    left: 260px;
     width: 40px;
     height: 100px;
     background-color: #FEB221;
@@ -69,3 +69,87 @@
     background-color: #FEB221;
     z-index: 400;
 }
+
+.absolute6{
+    top: 470px;
+    width: 80px;
+    height: 25px;
+    left: 260px;
+    background-color: #711325;
+    border-radius: 20px;
+    z-index: 200;
+}
+
+.absolute7{
+    top: 470px;
+    width: 80px;
+    height: 25px;
+    left: 360px;
+    background-color: #713760;
+    border-radius: 20px;
+    z-index: 200;
+}
+
+.absolute8{
+    top: 435px;
+    width: 60px;
+    height: 60px;
+    left: 470px;
+    background-color: #FB0102;
+    border-radius: 50%;
+    z-index: 200;
+}
+
+.absolute9{
+    top: 350px;
+    left: 410px;
+    width: 0;
+    height: 0;
+    border-left: 30px solid transparent;
+    border-right: 30px solid transparent;
+    border-bottom: 60px solid #04DAFC;
+    z-index: 500;
+}
+
+.absolute10{
+    top: 370px;
+    width: 40px;
+    height: 40px;
+    left: 490px;
+    background-color: #00FF3A;
+    border-radius: 50%;
+    z-index: 200;
+}
+
+.absolute11{
+    top: 110px;
+    width: 15px;
+    height: 35px;
+    left: 300px;
+    background-color: #060709;
+    border-radius: 20px;
+    z-index: 200;
+}
+
+.absolute12{
+    top: 110px;
+    width: 15px;
+    height: 35px;
+    left: 460px;
+    background-color: #060709;
+    border-radius: 20px;
+    z-index: 200;
+}
+
+.absolute13{
+    top: 150px;
+    left: 370px;
+    background-color: #060709;
+    width: 35px;
+    height: 7px;
+    border: 3px solid black;
+    border-radius: 50px;
+    border-top: none;
+    z-index: 200;
+}
+
