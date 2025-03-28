@@ -1,0 +1,331 @@
+<html>
+  <head>
+  </head>
+  <body>
+    <script type="application/javascript">
+      (async function() {
+        // Configuración
+        const API_URL = 'https://chat.nrywhite.lat/chats';
+        const MAX_MESSAGE_LENGTH = 140;
+        const REFRESH_INTERVAL = 5000;
+        
+        // Estado
+        let currentUser = localStorage.getItem('chatUsername') || '';
+        let messages = [];
+        let lastMessageId = 0;
+        
+        // Crear elementos principales
+        const appContainer = document.createElement('div');
+        Object.assign(appContainer.style, {
+          display: 'flex',
+          flexDirection: 'column',
+          height: '100vh',
+          width: '100vw',
+          overflow: 'hidden',
+          fontFamily: 'Arial, sans-serif',
+          backgroundColor: '#474747'
+        });
+        
+        // Contenedor de mensajes (fondo blanco)
+        const messagesContainer = document.createElement('div');
+        Object.assign(messagesContainer.style, {
+          flex: '1',
+          overflowY: 'auto',
+          padding: '20px',
+          backgroundColor: '#ffffff',
+          display: 'flex',
+          flexDirection: 'column'
+        });
+        
+        // Área de entrada
+        const inputArea = document.createElement('div');
+        Object.assign(inputArea.style, {
+          display: 'flex',
+          flexDirection: 'column',
+          padding: '15px',
+          backgroundColor: '#474747',
+          borderTop: '1px solid #dddfe2'
+        });
+        
+        // Contenedor para inputs
+        const inputWrapper = document.createElement('div');
+        Object.assign(inputWrapper.style, {
+          display: 'flex',
+          alignItems: 'center',
+          gap: '10px',
+          marginBottom: '10px'
+        });
+        
+        // Campo de usuario
+        const userInput = document.createElement('input');
+        userInput.type = 'text';
+        userInput.placeholder = 'Tu nombre de usuario';
+        userInput.value = currentUser;
+        Object.assign(userInput.style, {
+          padding: '12px',
+          border: '1px solid #dddfe2',
+          borderRadius: '20px',
+          backgroundColor: '#f0f2f5', //
+          color: '#1c1e21',
+          fontSize: '14px',
+          flex: '1'
+        });
+        
+        // Contenedor para mensaje y botón
+        const messageWrapper = document.createElement('div');
+        Object.assign(messageWrapper.style, {
+          display: 'flex',
+          alignItems: 'flex-end',
+          gap: '10px',
+          width: '100%',
+          position: 'relative'
+        });
+        
+        // Campo de mensaje
+        const messageInput = document.createElement('textarea');
+        messageInput.placeholder = 'Escribe un mensaje...';
+        Object.assign(messageInput.style, {
+          padding: '12px 50px 12px 12px', // More right padding for counter
+          border: '1px solid #dddfe2',
+          borderRadius: '20px',
+          backgroundColor: '#f0f2f5', //
+          color: '#1c1e21',
+          fontSize: '14px',
+          flex: '1',
+          resize: 'none',
+          minHeight: '40px',
+          maxHeight: '120px',
+          outline: 'none'
+        });
+        
+        // Contador de caracteres (ahora dentro del input)
+        const charCounter = document.createElement('div');
+        charCounter.textContent = MAX_MESSAGE_LENGTH;
+        Object.assign(charCounter.style, {
+          color: '#65676b',
+          fontSize: '12px',
+          position: 'absolute',
+          right: '60px', // Position next to send button
+          bottom: '25px',
+          backgroundColor: 'transparent',
+          pointerEvents: 'none' // Allow clicks to pass through to textarea
+        });
+        
+        // Botón de enviar
+        const sendButton = document.createElement('button');
+        sendButton.innerHTML = '➔';
+        Object.assign(sendButton.style, {
+          padding: '8px 12px',
+          borderRadius: '50%',
+          border: 'none',
+          backgroundColor: '#ff4655',
+          color: 'white',
+          cursor: 'pointer',
+          fontSize: '14px',
+          fontWeight: 'bold',
+          position: 'absolute',
+          right: '15px',
+          bottom: '15px'
+        });
+        
+        // Ensamblar interfaz
+        messageWrapper.appendChild(messageInput);
+        messageWrapper.appendChild(charCounter); // Add counter to message wrapper
+        messageWrapper.appendChild(sendButton);
+        
+        inputWrapper.appendChild(userInput);
+        inputArea.appendChild(inputWrapper);
+        inputArea.appendChild(messageWrapper);
+        
+        appContainer.appendChild(messagesContainer);
+        appContainer.appendChild(inputArea);
+        document.body.appendChild(appContainer);
+        
+        // Animaciones
+        const styleElement = document.createElement('style');
+        styleElement.textContent = `
+          @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+          }
+          @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+          }
+        `;
+        document.head.appendChild(styleElement);
+        
+        // Event listeners
+        sendButton.addEventListener('click', sendMessage);
+        messageInput.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            sendMessage();
+          }
+        });
+        
+        messageInput.addEventListener('input', updateCharCounter);
+        userInput.addEventListener('change', saveUsername);
+        
+        // Funciones
+        function saveUsername() {
+          currentUser = userInput.value.trim();
+          localStorage.setItem('chatUsername', currentUser);
+        }
+        
+        function updateCharCounter() {
+          const remaining = Math.max(0, MAX_MESSAGE_LENGTH - messageInput.value.length);
+          charCounter.textContent = remaining;
+          
+          // Cambiar color según caracteres restantes
+          if (remaining < 20) {
+            charCounter.style.color = '#ff4655';
+            charCounter.style.fontWeight = 'bold';
+          } else {
+            charCounter.style.color = '#65676b';
+            charCounter.style.fontWeight = 'normal';
+          }
+          
+          // Bloquear entrada si se excede el límite
+          if (messageInput.value.length > MAX_MESSAGE_LENGTH) {
+            messageInput.value = messageInput.value.substring(0, MAX_MESSAGE_LENGTH);
+          }
+        }
+        
+        async function sendMessage() {
+          const text = messageInput.value.trim();
+          const username = userInput.value.trim();
+          
+          if (!username) return showError('Ingresa tu nombre');
+          if (!text) return showError('El mensaje está vacío');
+          
+          try {
+            // Animación del botón
+            sendButton.style.animation = 'pulse 0.3s';
+            setTimeout(() => sendButton.style.animation = '', 300);
+            
+            // Mostrar mensaje localmente inmediatamente
+            addMessageToUI({
+              username,
+              message: text,
+              isCurrentUser: true
+            });
+            
+            // Enviar al API
+            const response = await fetch(API_URL, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ username, message: text })
+            });
+            
+            if (!response.ok) throw new Error('Error al enviar');
+            
+            // Limpiar campo de mensaje
+            messageInput.value = '';
+            updateCharCounter();
+            
+            // Actualizar mensajes
+            await fetchMessages();
+          } catch (error) {
+            console.error('Error:', error);
+            showError('Error al enviar mensaje');
+          }
+        }
+        
+        async function fetchMessages() {
+          try {
+            const response = await fetch(API_URL);
+            if (!response.ok) throw new Error('Error al cargar mensajes');
+            
+            const newMessages = await response.json();
+            if (newMessages.length === 0 || newMessages[newMessages.length - 1].id === lastMessageId) return;
+            
+            messages = newMessages;
+            lastMessageId = messages[messages.length - 1]?.id || 0;
+            renderMessages();
+          } catch (error) {
+            console.error('Error:', error);
+          }
+        }
+        
+        function renderMessages() {
+          messagesContainer.innerHTML = '';
+          
+          messages.forEach(msg => {
+            addMessageToUI({
+              username: msg.username,
+              message: msg.message,
+              isCurrentUser: msg.username === currentUser
+            });
+          });
+          
+          // Auto-scroll al final si no está desplazado
+          if (!isUserScrolledUp()) {
+            setTimeout(() => {
+              messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            }, 100);
+          }
+        }
+        
+        function addMessageToUI({ username, message, isCurrentUser }) {
+          const messageElement = document.createElement('div');
+          Object.assign(messageElement.style, {
+            maxWidth: '70%',
+            marginBottom: '15px',
+            padding: '10px 15px',
+            borderRadius: '18px',
+            backgroundColor: isCurrentUser ? '#ff4655' : '#474747',
+            color: isCurrentUser ? 'white' : '#1c1e21',
+            alignSelf: isCurrentUser ? 'flex-end' : 'flex-start',
+            animation: 'fadeIn 0.3s',
+            wordBreak: 'break-word',
+            boxShadow: '0 1px 2px rgba(0, 0, 0, 0.1)'
+          });
+          
+          if (!isCurrentUser) {
+            const usernameElement = document.createElement('div');
+            usernameElement.textContent = username;
+            Object.assign(usernameElement.style, {
+              fontWeight: 'bold',
+              marginBottom: '3px',
+              fontSize: '12px',
+              color: '#65676b'
+            });
+            messageElement.appendChild(usernameElement);
+          }
+          
+          const textElement = document.createElement('div');
+          textElement.textContent = message;
+          messageElement.appendChild(textElement);
+          
+          messagesContainer.appendChild(messageElement);
+        }
+        
+        function isUserScrolledUp() {
+          return messagesContainer.scrollTop + messagesContainer.clientHeight < messagesContainer.scrollHeight - 50;
+        }
+        
+        function showError(message) {
+          const errorElement = document.createElement('div');
+          errorElement.textContent = message;
+          Object.assign(errorElement.style, {
+            color: '#ff4655',
+            textAlign: 'center',
+            padding: '5px',
+            fontSize: '12px',
+            marginTop: '5px'
+          });
+          
+          inputArea.appendChild(errorElement);
+          setTimeout(() => errorElement.remove(), 3000);
+        }
+        
+        // Inicialización
+        saveUsername();
+        await fetchMessages();
+        setInterval(fetchMessages, REFRESH_INTERVAL);
+      })();
+    </script>
+  </body>
+</html>

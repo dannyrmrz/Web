@@ -1,0 +1,10 @@
+C:\Users\BRUTE\Documents\GitHub\Web\mi_proyecto\target\debug\deps\libactix_utils-4d928d296edbe1a9.rmeta: C:\Users\BRUTE\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\actix-utils-3.0.1\src\lib.rs C:\Users\BRUTE\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\actix-utils-3.0.1\src\counter.rs C:\Users\BRUTE\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\actix-utils-3.0.1\src\future\mod.rs C:\Users\BRUTE\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\actix-utils-3.0.1\src\future\either.rs C:\Users\BRUTE\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\actix-utils-3.0.1\src\future\poll_fn.rs C:\Users\BRUTE\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\actix-utils-3.0.1\src\future\ready.rs
+
+C:\Users\BRUTE\Documents\GitHub\Web\mi_proyecto\target\debug\deps\actix_utils-4d928d296edbe1a9.d: C:\Users\BRUTE\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\actix-utils-3.0.1\src\lib.rs C:\Users\BRUTE\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\actix-utils-3.0.1\src\counter.rs C:\Users\BRUTE\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\actix-utils-3.0.1\src\future\mod.rs C:\Users\BRUTE\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\actix-utils-3.0.1\src\future\either.rs C:\Users\BRUTE\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\actix-utils-3.0.1\src\future\poll_fn.rs C:\Users\BRUTE\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\actix-utils-3.0.1\src\future\ready.rs
+
+C:\Users\BRUTE\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\actix-utils-3.0.1\src\lib.rs:
+C:\Users\BRUTE\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\actix-utils-3.0.1\src\counter.rs:
+C:\Users\BRUTE\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\actix-utils-3.0.1\src\future\mod.rs:
+C:\Users\BRUTE\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\actix-utils-3.0.1\src\future\either.rs:
+C:\Users\BRUTE\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\actix-utils-3.0.1\src\future\poll_fn.rs:
+C:\Users\BRUTE\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\actix-utils-3.0.1\src\future\ready.rs:

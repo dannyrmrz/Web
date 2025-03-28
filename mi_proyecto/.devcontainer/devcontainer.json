@@ -1,0 +1,11 @@
+{
+    "name": "Rust Dev Container",
+    "dockerFile": "Dockerfile",
+    "workspaceFolder": "/app",
+    "extensions": [
+        "rust-lang.rust-analyzer"
+    ],
+    "settings": {
+        "json.schemas": []
+    }
+}
